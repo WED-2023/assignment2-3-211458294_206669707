@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 
 router.post("/Register", async (req, res, next) => {
   try {
+    
     // parameters exists
     // valid parameters
     // username exists
@@ -17,24 +18,36 @@ router.post("/Register", async (req, res, next) => {
       password: req.body.password,
       email: req.body.email,
     }
+    // ADD
+    console.log("Received registration request:", user_details);
     let users = [];
     users = await DButils.execQuery("SELECT username from users");
 
-    if (users.find((x) => x.username === user_details.username))
+    if (users.find((x) => x.username === user_details.username)){
       throw { status: 409, message: "Username taken" };
+      return;
+    }
 
     // add the new username
     let hash_password = bcrypt.hashSync(
       user_details.password,
       parseInt(process.env.bcrypt_saltRounds)
     );
+    // ADD
+    if (!process.env.bcrypt_saltRounds) {
+      console.error("bcrypt_saltRounds is not defined in .env file");
+      throw new Error("Server configuration error");
+    }
+    
     await DButils.execQuery(
       `INSERT INTO users VALUES ('${user_details.username}', '${user_details.firstname}', '${user_details.lastname}',
       '${user_details.country}', '${hash_password}', '${user_details.email}')`
     );
     res.status(201).send({ message: "user created", success: true });
+    return;
   } catch (error) {
-    res.body.send("catched an error")
+    // ADD
+    console.log("error in registering")
     next(error);
   }
 });
