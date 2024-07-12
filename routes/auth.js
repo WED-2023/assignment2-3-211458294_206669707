@@ -4,6 +4,7 @@ const MySql = require("../routes/utils/MySql");
 const DButils = require("../routes/utils/DButils");
 const bcrypt = require("bcrypt");
 
+// path in our API: /users/register
 router.post("/Register", async (req, res, next) => {
   try {
     
@@ -19,7 +20,7 @@ router.post("/Register", async (req, res, next) => {
       email: req.body.email,
     }
     // ADD
-    console.log("Received registration request:", user_details);
+    // console.log("Received registration request:", user_details);
     let users = [];
     users = await DButils.execQuery("SELECT username from users");
 
@@ -51,7 +52,7 @@ router.post("/Register", async (req, res, next) => {
     next(error);
   }
 });
-
+// path in our API: /users/login
 router.post("/Login", async (req, res, next) => {
   try {
     // check that username exists
@@ -71,7 +72,7 @@ router.post("/Login", async (req, res, next) => {
     }
 
     // Set cookie
-    req.session.user_id = user.user_id;
+    req.session.username = user.username;
 
 
     // return cookie

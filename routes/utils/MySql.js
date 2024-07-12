@@ -10,6 +10,44 @@ connectionLimit:4,
   database:"mydb"
 }
 const pool = new mysql.createPool(config);
+// const query = (sql, binding) => {
+//   return new Promise((resolve, reject) => {
+//       pool.query(sql, binding, (err, result, fields) => {
+//           if (err) reject(err);
+//           resolve(result);
+//       });
+//   });
+// };
+
+// const connection = () => {
+//   return new Promise((resolve, reject) => {
+//       pool.getConnection((err, conn) => {
+//           if (err) {
+//               reject(err);
+//               return;
+//           }
+//           console.log("MySQL pool connected: threadId " + conn.threadId);
+//           resolve({
+//               query: (sql, binding) => {
+//                   return new Promise((resolve, reject) => {
+//                       conn.query(sql, binding, (err, result) => {
+//                           if (err) {
+//                               reject(err);
+//                               return;
+//                           }
+//                           resolve(result);
+//                       });
+//                   });
+//               },
+//               release: () => {
+//                   conn.release();
+//               }
+//           });
+//       });
+//   });
+// };
+
+// module.exports = { query, connection };
 
 const connection =  () => {
   return new Promise((resolve, reject) => {

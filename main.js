@@ -70,7 +70,7 @@ app.use(function (req, res, next) {
   } else {
     next();
   }
-  res.send();
+  // res.send();
 });
 //#endregion
 
