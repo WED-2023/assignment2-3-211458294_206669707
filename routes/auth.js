@@ -16,7 +16,6 @@ router.post("/Register", async (req, res, next) => {
       country: req.body.country,
       password: req.body.password,
       email: req.body.email,
-      profilePic: req.body.profilePic
     }
     let users = [];
     users = await DButils.execQuery("SELECT username from users");
@@ -35,6 +34,7 @@ router.post("/Register", async (req, res, next) => {
     );
     res.status(201).send({ message: "user created", success: true });
   } catch (error) {
+    res.body.send("catched an error")
     next(error);
   }
 });
