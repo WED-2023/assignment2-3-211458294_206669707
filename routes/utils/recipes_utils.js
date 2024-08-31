@@ -37,6 +37,7 @@ async function getRecipeDetails(recipe_id) {
     }
 }
 
+// the search&filter is made according to the parameters and API search
 async function searchRecipe(recipeName, cuisine, diet, intolerance, number, username) {
     const response = await axios.get(`${api_domain}/complexSearch`, {
         params: {
@@ -52,9 +53,32 @@ async function searchRecipe(recipeName, cuisine, diet, intolerance, number, user
     return getRecipesPreview(response.data.results.map((element) => element.id), username);
 }
 
+// get random recipes from spooncular, need to check where we define diet parameter (string). 
+async function getRandomRecipes(number, diet) {
+    const response = await axios.get(`${api_domain}/random`, 
+        {
+            params: {
+                number: number,
+                diet: diet,
+                apiKey: process.env.spooncular_apiKey
 
+            }
+        }
+    )
+
+}   
+
+async function getFamilyRecipes() {
+    const recipesArray = Object.values(family_recipes);
+    console.log("recipesArray: ", recipesArray);
+    return { data: { recipes: recipesArray } };
+  }
 
 exports.getRecipeDetails = getRecipeDetails;
+exports.getRecipeInformation = getRecipeInformation;
+exports.searchRecipe = searchRecipe;
+exports.getFamilyRecipes = getFamilyRecipes;
+exports.getRandomRecipes = getRandomRecipes
 
 
 

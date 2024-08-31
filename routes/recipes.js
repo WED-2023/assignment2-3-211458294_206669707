@@ -36,6 +36,27 @@ router.get("/search", async (req, res, next) => {
     res.send('List of recipes');  
 });
 
+  // need to add to the API and check with POSTMAN
+  router.get('/familyRecipes', async (req, res, next) => {
+    try {
+      const recipe = await recipes_utils.getFamilyRecipes();
+      res.send(recipe);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  // need to add to the API and check with POSTMAN
+router.get('/random', async (req, res, next) => {
+  try {
+    const random_recipes = await recipes_utils.getRandomRecipes();
+    res.send(random_recipes);
+  } catch (error) {
+    next(error);
+  }
+});
 
   module.exports = router;
 })
+
+
