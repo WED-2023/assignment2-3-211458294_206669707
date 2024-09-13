@@ -1,4 +1,4 @@
-require("dotenv").config();
+// require("dotenv").config();
 //#region express configures
 var express = require("express");
 var path = require("path");
@@ -79,7 +79,7 @@ app.get("/alive", (req, res) => res.send("I'm alive"));
 
 // Routings
 app.use("/users", user);
-// app.use("/recipes", recipes);
+app.use("/recipes", recipes);
 app.use(auth);
 
 // Default router

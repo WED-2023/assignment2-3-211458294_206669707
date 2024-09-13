@@ -8,18 +8,19 @@ const api_domain = "https://api.spoonacular.com/recipes";
  * @param {*} recipes_info 
  */
 
-
+//IS THIS THE FULL?
 async function getRecipeInformation(recipe_id) {
     return await axios.get(`${api_domain}/${recipe_id}/information`, {
         params: {
             includeNutrition: false,
-            apiKey: process.env.spooncular_apiKey
+            apiKey: "c85d39f85feb4846a5eabd3866451088"//to change later
+            // apiKey: process.env.spooncular_apiKey
         }
     });
 }
 
 
-
+//IS THIS THE PREVIEW?
 async function getRecipeDetails(recipe_id) {
     let recipe_info = await getRecipeInformation(recipe_id);
     let { id, title, readyInMinutes, image, aggregateLikes, vegan, vegetarian, glutenFree } = recipe_info.data;
@@ -39,6 +40,7 @@ async function getRecipeDetails(recipe_id) {
 
 // the search&filter is made according to the parameters and API search
 async function searchRecipe(recipeName, cuisine, diet, intolerance, number, username) {
+    console.log('api domain: ${api_domain}')
     const response = await axios.get(`${api_domain}/complexSearch`, {
         params: {
             query: recipeName,
@@ -46,29 +48,31 @@ async function searchRecipe(recipeName, cuisine, diet, intolerance, number, user
             diet: diet,
             intolerances: intolerance,
             number: number,
-            apiKey: process.env.spooncular_apiKey
+            apiKey: "c85d39f85feb4846a5eabd3866451088"//to change later
         }
     });
-
-    return getRecipesPreview(response.data.results.map((element) => element.id), username);
+    return response.data.results
+    // return getRecipesPreview(response.data.results.map((element) => element.id), username);
 }
 
 // get random recipes from spooncular, need to check where we define diet parameter (string). 
-async function getRandomRecipes(number, diet) {
+async function getRandomRecipes(number) {
     const response = await axios.get(`${api_domain}/random`, 
         {
             params: {
-                number: number,
-                diet: diet,
-                apiKey: process.env.spooncular_apiKey
-
+                // diet: diet, //there is no such thing
+                apiKey: "c85d39f85feb4846a5eabd3866451088",//to change later
+                // apiKey: process.env.spooncular_apiKey
+                number: number
             }
         }
-    )
-
+    );
+    return response.data.recipes
 }   
 
 async function getFamilyRecipes() {
+    const path = require('path');
+    const family_recipes = require(path.join(__dirname, '../../family_recipes.json'));
     const recipesArray = Object.values(family_recipes);
     console.log("recipesArray: ", recipesArray);
     return { data: { recipes: recipesArray } };
@@ -78,7 +82,7 @@ exports.getRecipeDetails = getRecipeDetails;
 exports.getRecipeInformation = getRecipeInformation;
 exports.searchRecipe = searchRecipe;
 exports.getFamilyRecipes = getFamilyRecipes;
-exports.getRandomRecipes = getRandomRecipes
+exports.getRandomRecipes = getRandomRecipes;
 
 
 
