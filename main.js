@@ -26,7 +26,7 @@ app.use(
 app.use(express.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
 app.use(express.static(path.join(__dirname, "public"))); //To serve static files such as images, CSS files, and JavaScript files
 //local:
-app.use(express.static(path.join(__dirname, "dist")));
+app.use(express.static(path.join(__dirname, "../assignment2-1-211458294_206669707/dist")));
 //remote:
 // app.use(express.static(path.join(__dirname, '../assignment2-1-211458294_206669707/dist/..)));
 app.get("/",function(req,res)
@@ -34,8 +34,8 @@ app.get("/",function(req,res)
   //remote: 
   // res.sendFile(path.join(__dirname, '../assignment2-1-211458294_206669707/dist//index.html'));
   //local:
-  res.sendFile(__dirname+"/index.html");
-
+  res.sendFile(path.join(__dirname,"../assignment2-1-211458294_206669707/dist/index.html"));
+  console.log("ADI ", path.join(__dirname,"../assignment2-1-211458294_206669707/dist/index.html"))
 });
 
 // app.use(cors());

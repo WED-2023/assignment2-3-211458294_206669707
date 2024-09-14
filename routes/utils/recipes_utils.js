@@ -12,7 +12,7 @@ const api_domain = "https://api.spoonacular.com/recipes";
 async function getRecipeInformation(recipe_id) {
     return await axios.get(`${api_domain}/${recipe_id}/information`, {
         params: {
-            includeNutrition: false,
+            // includeNutrition: false,
             apiKey: "c85d39f85feb4846a5eabd3866451088"//to change later
             // apiKey: process.env.spooncular_apiKey
         }
@@ -20,7 +20,6 @@ async function getRecipeInformation(recipe_id) {
 }
 
 
-//IS THIS THE PREVIEW?
 async function getRecipeDetails(recipe_id) {
     let recipe_info = await getRecipeInformation(recipe_id);
     let { id, title, readyInMinutes, image, aggregateLikes, vegan, vegetarian, glutenFree } = recipe_info.data;
@@ -37,6 +36,7 @@ async function getRecipeDetails(recipe_id) {
         
     }
 }
+
 
 // the search&filter is made according to the parameters and API search
 async function searchRecipe(recipeName, cuisine, diet, intolerance, number, username) {
